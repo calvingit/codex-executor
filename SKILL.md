@@ -35,6 +35,10 @@ Do not delegate vague requests without goal and acceptance criteria.
 
 Use Codex CLI configured defaults unless a model is explicitly required.
 
+For model routing and profile selection, see:
+
+`references/model-selection.md`
+
 Reasoning guidance:
 - low: small edits and simple analysis
 - medium: normal coding tasks

@@ -3,11 +3,11 @@ name: codex-executor
 description: Use Codex CLI as a coding execution sub-agent for analysis, implementation, debugging, refactoring, testing, and review tasks.
 ---
 
-# Codex Executor Skill
+# Codex Executor
 
 ## Purpose
 
-Codex CLI is an execution-focused coding agent.
+Codex CLI is an execution-focused coding sub-agent.
 
 The caller agent owns:
 - understanding user intent
@@ -21,53 +21,19 @@ Codex owns:
 - verification
 - reporting changes
 
-## Delegation
+## When To Use
 
-Use Codex when a task requires:
+Use Codex for tasks requiring:
 - repository exploration
 - multi-file changes
 - terminal execution
 - debugging with real code
 
-Do not delegate vague requests without goal and acceptance criteria.
+Do not delegate vague tasks. Every task must define a goal and success criteria.
 
-## Model
+## Delegation Requirements
 
-Use Codex CLI configured defaults unless a model is explicitly required.
-
-For model routing and profile selection, see:
-
-`references/model-selection.md`
-
-Reasoning guidance:
-- low: small edits and simple analysis
-- medium: normal coding tasks
-- high: debugging and architecture changes
-- xhigh: only when required
-
-## Execution
-
-Analysis:
-
-```bash
-codex exec --sandbox read-only --skip-git-repo-check "task"
-```
-
-Modification:
-
-```bash
-codex exec --sandbox workspace-write --full-auto --skip-git-repo-check "task"
-```
-
-Resume:
-
-```bash
-echo "follow up" | codex exec resume --last
-```
-
-## Task Requirements
-
-Every request should include:
+Every Codex request should include:
 
 - workspace
 - goal
@@ -76,15 +42,20 @@ Every request should include:
 - acceptance criteria
 - verification commands
 
-## Validation
+## Execution Modes
 
-Codex output is evidence, not truth.
+Use the appropriate execution mode:
 
-Check:
-- changed files
-- diff
-- test results
-- build results
-- assumptions
+- analysis: read-only investigation
+- write: authorized code modification
+- full: explicitly approved unrestricted access
+- resume: continue an existing session
 
-A task is complete only when implementation and verification are both reported.
+## References
+
+- references/handoff.md - Agent handoff protocol
+- references/prompt.md - Prompt patterns
+- references/model-selection.md - Model routing policy
+- references/verification.md - Completion verification
+- references/lifecycle.md - Session lifecycle
+- references/cli.md - CLI usage

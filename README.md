@@ -35,14 +35,83 @@ Repository
 
 ## Installation
 
-Copy this skill directory into your agent skills directory.
+```bash
+curl -fsSL https://raw.githubusercontent.com/calvingit/codex-executor/main/install.sh | bash
+```
+
+The installer places the skill at:
+
+```text
+~/.agents/skills/codex-executor
+```
 
 ## Usage
 
-Example:
+### Direct Codex CLI
 
 ```bash
 codex exec --sandbox workspace-write --full-auto "Implement the requested change and run tests"
+```
+
+### Through wrapper
+
+```bash
+scripts/codex-run.sh write "Implement the requested change and run tests"
+```
+
+JSON mode for Agent integration:
+
+```bash
+scripts/codex-run.sh write --json "Implement the requested change"
+```
+
+## Agent Integration
+
+### Claude Code
+
+Example delegation:
+
+```text
+Use codex-executor skill.
+
+Task:
+Implement refresh token support.
+
+Workspace:
+/path/to/project
+
+Constraints:
+- preserve existing API
+- run tests
+
+Acceptance:
+- authentication flow works
+```
+
+### PI / OpenCode
+
+Pass a structured handoff:
+
+```yaml
+task:
+  type: implementation
+workspace:
+  path: /path/to/project
+goal: Implement refresh token support
+constraints:
+  - preserve existing API
+acceptance:
+  - authentication tests pass
+verification:
+  - npm test
+```
+
+### Custom Agents
+
+Use the same handoff contract defined in:
+
+```text
+references/handoff.md
 ```
 
 ## Design Principles
@@ -57,9 +126,13 @@ codex exec --sandbox workspace-write --full-auto "Implement the requested change
 ```
 .
 ├── SKILL.md
+├── VERSION
+├── CHANGELOG.md
 ├── references
+│   ├── cli.md
 │   ├── handoff.md
 │   ├── lifecycle.md
+│   ├── model-selection.md
 │   ├── prompt.md
 │   └── verification.md
 └── scripts
